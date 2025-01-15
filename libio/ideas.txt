@@ -1,0 +1,145 @@
+STRUCTURE
+gabby246usher
+https://github.com/heli-toon/libio/invitations
+
+library-management/
+├── app/
+│   ├── templates/          # HTML templates
+│   ├── static/             # CSS, JS, images
+│   │   ├── css/
+│   │   └── js/
+│   ├── __init__.py         # Initialize Flask app
+│   ├── routes.py           # App routes
+│   ├── models.py           # Database models (optional)
+│   └── forms.py            # Flask-WTF forms (optional)
+├── requirements.txt        # Dependencies
+├── run.py                  # Entry point for app
+└── config.py               # Configuration settings
+
+________________________________________________
+To run the Flask app locally, follow these steps:
+
+1. Install Python
+Make sure you have Python installed (preferably version 3.8+). You can check with:
+bash
+Copy code
+python --version
+2. Set Up a Virtual Environment
+It's a good practice to use a virtual environment to manage dependencies.
+
+Create a virtual environment:
+
+bash
+Copy code
+python -m venv venv
+Activate the virtual environment:
+
+Windows:
+bash
+Copy code
+venv\Scripts\activate
+Mac/Linux:
+bash
+Copy code
+source venv/bin/activate
+Install dependencies:
+
+bash
+Copy code
+pip install -r requirements.txt
+3. Run the Flask App
+Navigate to the directory containing run.py.
+
+Start the app:
+
+bash
+Copy code
+python run.py
+Open your browser and go to:
+
+arduino
+Copy code
+http://127.0.0.1:5000
+4. Debugging Mode (Optional)
+If you want to enable debugging mode to see live updates and errors:
+
+Modify run.py for development:
+python
+Copy code
+if __name__ == '__main__':
+    app.run(debug=True)
+Would you like additional tips, such as integrating a database or adding user authentication? Let me know!
+___________________________________________________________________________________________________
+
+TEST code.
+
+from app import db
+from app.models import Admin
+from werkzeug.security import generate_password_hash
+
+# Create a new admin user
+admin = Admin(
+    username="admin",
+    password_hash=generate_password_hash("adminpassword", method='sha256')
+)
+
+# Add to the database
+db.session.add(admin)
+db.session.commit()
+print("Admin added successfully!")
+
+____________________________________
+Steps to Deploy Flask App on Railway
+Set Up Railway
+
+Visit Railway.app and sign up/log in.
+Create a new project.
+Prepare Your Flask App
+
+Ensure your app is ready for production:
+Install Gunicorn for running Flask in production:
+
+pip install gunicorn
+Update requirements.txt:
+
+pip freeze > requirements.txt
+Create a Procfile in your root directory to define the app entry point:
+arduino
+web: gunicorn run:app
+Modify run.py for production:
+python
+from app import create_app
+
+app = create_app()
+
+if __name__ == '__main__':
+    app.run()  # Railway sets the port dynamically
+Push Code to GitHub
+
+Link Railway to GitHub
+In Railway, select “Deploy from GitHub Repo.”
+Authorize Railway to access your GitHub account.
+Select your project repository.
+Set Environment Variables
+
+Railway automatically assigns a port. Add it to your app:
+In app/__init__.py, set:
+python
+import os
+app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+Deploy
+
+Railway will detect your requirements.txt and Procfile to build and run the app.
+Once deployed, you’ll get a public URL for your app.
+Let me know if you run into any issues during deployment or need help expanding the app!
+
+
+Sign Up for Users.
+Borrow books for Users
+Upload images
+
+
+Normal users are not supposed to go to the admin dashboard
+
+
+pip install pillow flask Flask-SQLAlchemy flask-login werkzeug
